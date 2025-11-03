@@ -6,12 +6,15 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Badge } from "@/components/ui/badge"
 
 interface FormData {
+  firstName: string
+  lastName: string
   year: string
   branch: string
   strongSubjects: string[]
@@ -31,7 +34,7 @@ interface MatchResult {
   studyStyle: string
 }
 
-const YEARS = ["1st Year", "2nd Year", "3rd Year", "4th Year", "Graduate"]
+const YEARS = ["1st Year", "2nd Year", "3rd Year", "4th Year"]
 const BRANCHES = [
   "Computer Science",
   "Electronics",
@@ -67,11 +70,13 @@ const SUBJECTS = [
 const STUDY_STYLES = ["Quiet", "Interactive", "Problem-solving", "Mixed"]
 const GROUP_SIZES = ["1-on-1", "2-3", "4-6"]
 const SESSION_PREFERENCES = ["Regular weekly", "On-demand"]
-const LOCATIONS = ["Library","LRC", "Hostel"]
+const LOCATIONS = ["Library","LRC", "Hostel","Common Room"]
 const BRANCH_PREFERENCES = ["Same branch only", "Open to cross-branch"]
 
 export function MatchmakingForm() {
   const [formData, setFormData] = useState<FormData>({
+    firstName: "",
+    lastName: "",
     year: "",
     branch: "",
     strongSubjects: [],
@@ -138,6 +143,8 @@ export function MatchmakingForm() {
 
   const resetForm = () => {
     setFormData({
+      firstName: "",
+      lastName: "",
       year: "",
       branch: "",
       strongSubjects: [],
@@ -179,6 +186,27 @@ export function MatchmakingForm() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-8">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input
+                      id="firstName"
+                      placeholder="Enter your first name"
+                      value={formData.firstName}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, firstName: e.target.value }))}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input
+                      id="lastName"
+                      placeholder="Enter your last name"
+                      value={formData.lastName}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, lastName: e.target.value }))}
+                    />
+                  </div>
+                </div>
                 {/* Year and Branch */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
